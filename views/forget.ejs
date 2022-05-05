@@ -1,0 +1,43 @@
+<% include ./partials/header.ejs %>
+
+
+    <div class="container">
+        <form action="/forget" method="post">
+            <div class="mt-5 form-group">
+                <label for="exampleInputEmail12">Email address</label>
+                <input type="email" id="email" name="email" class="form-control" id="exampleInputEmail12" aria-describedby="emailHelp" placeholder="Enter email" required>
+
+                <h6 id="h6" style="color: rgb(233, 99, 99);font-weight: 500;margin-top: 9px;"></h6>
+
+
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+
+            <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        var email = document.querySelector("#email");
+        document.querySelector("#submit").addEventListener("click", function() {
+            document.querySelector("#h6").style.color = "green"
+            document.querySelector("#h6").textContent = "Link sent to your Email id"
+        })
+        email.addEventListener("input", function() {
+            axios.post("http://localhost:3000/getname", {
+                email: email.value
+            }).then(function(e) {
+
+                if (e.data === null) {
+                    document.querySelector("#h6").textContent = "Email is invalid"
+                    document.querySelector("#submit").setAttribute('disabled', true)
+
+                } else {
+                    document.querySelector("#h6").textContent = " "
+                    document.querySelector("#submit").removeAttribute('disabled')
+                }
+
+            })
+        })
+    </script>
+    <% include ./partials/footer.ejs %>

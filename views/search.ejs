@@ -1,0 +1,29 @@
+<% include ./partials/header.ejs %>
+    <div class="container"><br>
+        <h4 style="font-weight: 400;">Serached users are :- </h4><br>
+        <% users.forEach(function(e){%>
+            <div class="mt-2 container">
+
+
+                <nav aria-label="mt-5 breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page">
+                            <a href=<%="/search/" +e.username %>>
+                                <%= e.username%>
+                            </a>
+                        </li>
+                    </ol>
+                </nav>
+
+            </div>
+
+
+
+
+            <% })%>
+
+
+
+
+    </div>
+    <% include ./partials/footer.ejs %>

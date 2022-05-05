@@ -1,0 +1,23 @@
+<% include ./partials/header.ejs %>
+    <div class="container">
+        <div class="center">
+            <h5 class="text-primary">Login Here To Enter Inside App</h5>
+            <hr>
+            <form action="/login" method="POST">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Username</label>
+                    <input type="text" name="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                    else.</small>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" name="password" class="form-control" id="exampleInputPassword1" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Submit</button>
+            </form>
+            <a class="d-block mt-3 text-center" href="/register">Don't have an account ?</a>
+            <a style="color: rgb(245, 115, 115);font-size: 15px;" class="d-block mt-1 text-center" href="/forget">Forget Password ?</a>
+        </div>
+    </div>
+    <% include ./partials/footer.ejs %>

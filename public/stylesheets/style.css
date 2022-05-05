@@ -1,0 +1,40 @@
+.center {
+    padding: 30px;
+    background-color: #e3e3e3;
+    border-radius: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.center-reg {
+    padding: 30px 60px;
+    background-color: #e3e3e3;
+    border-radius: 10px;
+    position: absolute;
+    width: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#pencil {
+    opacity: 0;
+}
+
+#profilePic:hover {
+    cursor: pointer;
+}
+
+#profilePic:hover #pencil {
+    cursor: pointer;
+    opacity: 1;
+}
+
+@media(max-width: 500px) {
+    .center-reg {
+        padding: 30px;
+        width: 90%;
+    }
+}

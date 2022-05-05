@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../stylesheets/style.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js" integrity="sha256-bd8XIKzrtyJ1O5Sh3Xp3GiuMIzWC42ZekvrMMD4GxRg=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <title>G Faad Book</title>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="text-primary navbar-brand" href="#">G Faad Book</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile">Post Something</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/timeline">Timeline</a>
+                </li>
+            </ul>
+            <% if(loggedin === false){ %>
+                <a class="btn btn-warning mr-2" href="/logout">Logout</a>
+                <% }else{%>
+                    <a class="btn btn-warning mr-2" href="/logout">Logout</a>
+                    <% } %>
+                        <form action="/search" method="post" class="form-inline my-2 my-lg-0">
+                            <input name="username" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        </form>
+        </div>
+    </nav>
+
+    <link rel="stylesheet" href="../stylesheets/profile.css">
+    <div class="flex container mt-5 pt-4 pb-4">
+        <div id="left">
+            <div class="profilePicFrame">
+                <div style="position: relative;" id="profilePic">
+                    <form action="/profilepic" enctype="multipart/form-data" method="post">
+                        <input style="display: none;" type="file" accept="image/png,image/jpeg" name="file" id="file">
+                        <input id="submit" style="display: none;" type="submit" value="Submit">
+                    </form>
+                    <img class="prflpic" src='<%= userDets.profilepic%>' alt="a">
+                    <i id="pencil" style="position: absolute;right: 2px;color: rgb(46, 46, 46); padding: 5px;background-color: white;border-radius: 50px;" class="fa fa-pencil" aria-hidden="true"></i>
+                </div>
+            </div>
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Send Message Anonymously</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <form action="#" method="post">
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="exampleFormControlTextarea1">Write your Message here ...</label>
+                                    <textarea style="resize: none;" name="message" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="submit" class="btn btn-primary" value="Send Message">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="details p-2 pl-3 pr-3">
+                <h4>
+                    <%= userDets.name %>
+                </h4>
+                <h6 class="lead">Designer & Developer</h6>
+                <p class="lead mt-4">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Necessitatibus error qui vel.
+                </p>
+                <div class="icns flexy">
+                    <a href="#" title="Call Now" class="icon"><i class="fa fa-phone"></i></a>
+                    <a href="#"><span title="Buzz Them" class="icon ml-3"><i class="fa fa-bell"></i></span></a>
+                    <span data-toggle="modal" data-target="#exampleModalCenter" title="Say Anonymously" class="icon ml-3"><i
+                        class="fa fa-comment"></i></span>
+                </div>
+
+                <% if(loggedin === false){%>
+
+
+                    <%}else{%>
+                        <a class="mt-4 btn btn-sm btn-primary" href="/update">Edit Profile</a>
+
+                        <form class="mt-4" action="/post" method="POST">
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea1">What's your current thought ?</label>
+                                <textarea style="resize: none;" class="form-control" name="post" id="exampleFormControlTextarea1" rows="3" placeholder="Write your thought here..." required></textarea>
+                            </div>
+                            <input type="submit" class="btn btn-primary" value="Post It">
+                        </form>
+
+
+                        <%}%>
+
+
+
+                            <hr>
+                            <div class="prevPost mt-4">
+                                <h4>Previous Posts</h4>
+                                <small>Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit facilis atque exercitationem
+                    magni?</small>
+                                <div id="posts" class="posts mt-4">
+                                    <% allHisPosts.reverse().forEach(function(post){ %>
+                                        <div class="post">
+                                            <div class="postTop">
+                                                <div class="usrPrfl">
+                                                    <img class="prflpic" src="#" alt="a">
+                                                </div>
+                                                <div class="postDetails">
+                                                    <h6>
+                                                        <%= post.username %>
+                                                    </h6>
+                                                    <small><% if(post.city === undefined) { %>
+                                    city not known
+                                <% } else { %>
+                                    <%= userDets.city %>
+                                <% } %></small>
+                                                </div>
+                                            </div>
+                                            <p>
+                                                <%= post.postText %>
+                                            </p>
+                                            <small>
+                            <%= post.likes.length %> Likes,
+                            <%= post.dislikes.length %> dislikes,
+                            <%= post.loves.length %> Love Reactions</small>
+                                            <div class="options">
+                                                <span id="love" title="Love" class="icon">
+                                <a href=<%= "/love/"+post._id %>><i class="fa fa-heart"></i></a>
+                            </span>
+                                                <span id="like" title="Like" class="icon">
+                                <a href=<%= "/likes/"+post._id %>><i class="fa fa-thumbs-up"></i></a>
+                            </span>
+                                                <span id="dislike" title="Dislike" class="icon">
+                                <a href=<%= "/dislikes/"+post._id %>><i class="fa fa-thumbs-down"></i></a>
+                            </span>
+                                            </div>
+                                        </div>
+                                        <% }) %>
+                                            <p class="text-center"><small>No More Posts Left</small></p>
+                                </div>
+                            </div>
+            </div>
+        </div>
+        <div id="right">
+        </div>
+    </div>
+
+    <script>
+        var submit = document.querySelector("#submit");
+        var file = document.querySelector("#file");
+        var pencil = document.querySelector("#pencil");
+
+        pencil.addEventListener("click", function() {
+            file.click();
+        })
+
+        file.addEventListener("change", function() {
+            submit.click();
+        })
+    </script>
+
+    <script>
+        $(window).scroll(function() {
+            sessionStorage.scrollPos = $(window).scrollTop();
+        });
+        var init = function() {
+            $(window).scrollTop(sessionStorage.scrollPos || 0)
+        };
+        window.onload = init;
+    </script>
+
+    <% include ./partials/footer.ejs %>
